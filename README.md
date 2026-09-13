@@ -1,9 +1,9 @@
 # 🏫 BÀI LAB 3: CHATBOT VS REACT AGENT — TỪ LÝ THUYẾT ĐẾN THỰC THI (MCP ENHANCED)
 
-> **Mã bài học:** `DAY03-REACT-AGENT`  
-> **Hình thức thực hiện:** **CÁ NHÂN** *(Mỗi học viên tự làm và tự nộp 1 bài cá nhân)*  
-> **Quy chuẩn nộp bài:** Học viên Fork Repo này về GitHub cá nhân và đổi tên theo đúng cú pháp:  
-> 📌 **`K4-DAY03-HoVaTen-MSSV`** *(Ví dụ: `K4-DAY03-NguyenVanA-SV2026001`)*  
+> **Mã bài học:** `DAY03-REACT-AGENT`
+> **Hình thức thực hiện:** **CÁ NHÂN** *(Mỗi học viên tự làm và tự nộp 1 bài cá nhân)*
+> **Quy chuẩn nộp bài:** Học viên Fork Repo này về GitHub cá nhân và đổi tên theo đúng cú pháp:
+> 📌 **`K4-DAY03-HoVaTen-MSSV`** *(Ví dụ: `K4-DAY03-NguyenVanA-SV2026001`)*
 
 ---
 
@@ -14,6 +14,7 @@
 Thực hiện 3 bước lệnh Terminal thiết thực ngay khi clone repo về máy:
 
 ### Bước 1: Clone Repo & Tạo môi trường ảo
+
 ```bash
 git clone https://github.com/<tai_khoan_cua_ban>/K4-DAY03-HoVaTen-MSSV.git
 cd K4-DAY03-HoVaTen-MSSV
@@ -26,6 +27,7 @@ source .venv/bin/activate
 ```
 
 ### Bước 2: Cài đặt thư viện & Tạo file cấu hình môi trường
+
 ```bash
 pip install -r requirements.txt
 # Trên Windows CMD/PowerShell:
@@ -37,21 +39,23 @@ cp config/test_cases.example.json config/test_cases.json
 ```
 
 ### Bước 3: Chạy thử Baseline kiểm tra môi trường
+
 ```bash
 python src/app.py --all
 ```
 
 **Kỳ vọng Output màn hình:**
+
 ```text
 ✅ [MOCK OFFLINE MODE PASS]: Môi trường đã sẵn sàng! 
 📊 [KẾT QUẢ TEST SUITE]: 2 Đã chạy (TC01, TC02 mẫu) | 3 Đang chờ viết câu hỏi (TODO)
 ```
 
-> 🔑 **QUY ĐỊNH BẮT BUỘC VỀ API KEY VÀ NỘP BÀI (SUBMISSION REQUIREMENT):**  
-> 
-> 1. **Giai đoạn gõ code & debug (Miễn phí 0đ):** Hệ thống mặc định chạy `MockOfflineProvider` giúp bạn thực hành gõ code, kiểm thử logic ban đầu hoàn toàn miễn phí, không tốn token, không lo nghẽn mạng.  
-> 2. **Giai đoạn NỘP BÀI CHÍNH THỨC (Bắt buộc dùng LLM thật):** Khi chạy nghiệm thu để lấy dữ liệu dán vào báo cáo [`docs/trace_eval.md`](docs/trace_eval.md) nộp bài, **học viên BẮT BUỘC phải mở file `.env` điền `GEMINI_API_KEY` (hoặc `OPENAI_API_KEY`)** để Agent giao tiếp với mô hình LLM thật.  
-> 
+> 🔑 **QUY ĐỊNH BẮT BUỘC VỀ API KEY VÀ NỘP BÀI (SUBMISSION REQUIREMENT):**
+>
+> 1. **Giai đoạn gõ code & debug (Miễn phí 0đ):** Hệ thống mặc định chạy `MockOfflineProvider` giúp bạn thực hành gõ code, kiểm thử logic ban đầu hoàn toàn miễn phí, không tốn token, không lo nghẽn mạng.
+> 2. **Giai đoạn NỘP BÀI CHÍNH THỨC (Bắt buộc dùng LLM thật):** Khi chạy nghiệm thu để lấy dữ liệu dán vào báo cáo [`docs/trace_eval.md`](docs/trace_eval.md) nộp bài, **học viên BẮT BUỘC phải mở file `.env` điền `GEMINI_API_KEY` (hoặc `OPENAI_API_KEY`)** để Agent giao tiếp với mô hình LLM thật.
+>
 > ⚠️ *Lưu ý:* Bài nộp chỉ chạy trên Mock Provider mà không kết nối LLM API thật sẽ bị trừ điểm phần nghiệm thu thực tế (Tiêu chí 2 & Tiêu chí 3 trong Rubric).
 
 ---
@@ -61,11 +65,12 @@ python src/app.py --all
 Mục tiêu cốt lõi của Bài Lab này là giúp học viên tự tay phát triển một **Trợ lý Tác tử ReAct (ReAct Agent)** hoàn chỉnh.
 
 Thay vì chỉ sinh văn bản hội thoại đơn thuần như Chatbot cơ bản, tác tử (Agent) của bạn sẽ có khả năng:
+
 1. **Tự suy luận và chọn công cụ:** Chủ động kích hoạt vòng lặp ReAct (`Thought -> Action -> Observation`) qua giao thức **Model Context Protocol (MCP)** để truy vấn dữ liệu thực tế.
 2. **Tổng hợp câu trả lời chính xác:** Sử dụng dữ liệu thực tế từ Tool trả về để trả lời sinh viên, tránh hiện tượng ảo giác (Hallucination).
 3. **Trích xuất bằng chứng (Trace Log):** Ghi lại file vết `docs/trace_waterfall.json` chứng minh chuỗi suy luận từng bước của Agent.
 
-> 🌐 **GIAO THỨC MODEL CONTEXT PROTOCOL (MCP):**  
+> 🌐 **GIAO THỨC MODEL CONTEXT PROTOCOL (MCP):**
 > Mã nguồn [`src/mcp_server.py`](src/mcp_server.py) mô phỏng kiến trúc MCP Server chuẩn (giao tiếp Client-Server độc lập qua giao thức JSON-RPC 2.0). Agent Core ([`src/app.py`](src/app.py)) đóng vai trò MCP Client gửi yêu cầu thực thi Tool tới MCP Server.
 
 ---
@@ -74,11 +79,11 @@ Thay vì chỉ sinh văn bản hội thoại đơn thuần như Chatbot cơ bả
 
 Học viên làm bài lần lượt theo đúng luồng 3 bước tinh giản dưới đây:
 
-| Bước | Tài liệu / Hành động | Nội dung thực hiện |
-| :---: | :--- | :--- |
-| **Bước 1** | 📄 **`README.md`** *(Hiện tại)* | Nắm quy chế, chạy Quickstart verify môi trường offline miễn phí. |
-| **Bước 2** | 🎓 **`docs/CODELAB.md`** | **[TRỌNG TÂM]** Chọn bài toán (Tham khảo gợi ý tại [docs/DANH_SACH_DE_TAI.md](docs/DANH_SACH_DE_TAI.md)) ➔ Phân tích Agentic Fit ➔ Điền `GEMINI_API_KEY` ➔ Code từng task theo checklist. |
-| **Bước 3** | 📊 **`docs/trace_eval.md`** | Chạy test suite với API thật, xuất trace log, hoàn thiện báo cáo thu hoạch duy nhất và push repo nộp bài. |
+|       Bước       | Tài liệu / Hành động                  | Nội dung thực hiện                                                                                                                                                                                             |
+| :----------------: | :----------------------------------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| **Bước 1** | 📄**`README.md`** *(Hiện tại)* | Nắm quy chế, chạy Quickstart verify môi trường offline miễn phí.                                                                                                                                          |
+| **Bước 2** | 🎓**`docs/CODELAB.md`**            | **[TRỌNG TÂM]** Chọn bài toán (Tham khảo gợi ý tại [docs/DANH_SACH_DE_TAI.md](docs/DANH_SACH_DE_TAI.md)) ➔ Phân tích Agentic Fit ➔ Điền `GEMINI_API_KEY` ➔ Code từng task theo checklist. |
+| **Bước 3** | 📊**`docs/trace_eval.md`**         | Chạy test suite với API thật, xuất trace log, hoàn thiện báo cáo thu hoạch duy nhất và push repo nộp bài.                                                                                            |
 
 ---
 
@@ -122,9 +127,9 @@ Học viên làm bài lần lượt theo đúng luồng 3 bước tinh giản d�
 
 ## 💯 6. THANG ĐIỂM ĐÁNH GIÁ (SCORING RUBRIC 100%)
 
-| Tiêu chí | Trọng số | Mô tả chi tiết | Bằng chứng kiểm tra (Artifacts) |
-| :--- | :---: | :--- | :--- |
-| **1. Agentic Fit & Tool Specs** | **25%** | Phân tích đúng 4 tiêu chí Agentic Fit. Khai báo Tool Schema chuẩn JSON Schema. | Bảng Scoring Matrix (`docs/trace_eval.md`) + `config/test_cases.json`. |
-| **2. ReAct Loop & MCP Integration** | **35%** | Vòng lặp ReAct chạy mượt mà qua Native Tool Calling & MCP Server **trên LLM API thật (Gemini/OpenAI)**. | Code trong `src/mcp_server.py` + `src/tools.py` + `src/app.py` + Log API thật. |
-| **3. Waterfall Trace & Observation** | **25%** | File log `trace_waterfall.json` trích xuất đầy đủ chuỗi suy luận Thought $\rightarrow$ Action $\rightarrow$ Observation. | File log `docs/trace_waterfall.json` + `docs/trace_eval.md`. |
-| **4. Git Repository & Submission** | **15%** | Cấu trúc Repo sạch sẽ, commit chuẩn chỉ và nộp đúng hạn trên LMS VLearn. | Link Repo GitHub cá nhân. |
+| Tiêu chí                                 |  Trọng số  | Mô tả chi tiết                                                                                                                     | Bằng chứng kiểm tra (Artifacts)                                                   |
+| :----------------------------------------- | :-----------: | :------------------------------------------------------------------------------------------------------------------------------------ | :----------------------------------------------------------------------------------- |
+| **1. Agentic Fit & Tool Specs**      | **25%** | Phân tích đúng 4 tiêu chí Agentic Fit. Khai báo Tool Schema chuẩn JSON Schema.                                                | Bảng Scoring Matrix (`docs/trace_eval.md`) + `config/test_cases.json`.          |
+| **2. ReAct Loop & MCP Integration**  | **35%** | Vòng lặp ReAct chạy mượt mà qua Native Tool Calling & MCP Server**trên LLM API thật (Gemini/OpenAI)**.                  | Code trong`src/mcp_server.py` + `src/tools.py` + `src/app.py` + Log API thật. |
+| **3. Waterfall Trace & Observation** | **25%** | File log`trace_waterfall.json` trích xuất đầy đủ chuỗi suy luận Thought $\rightarrow$ Action $\rightarrow$ Observation. | File log`docs/trace_waterfall.json` + `docs/trace_eval.md`.                      |
+| **4. Git Repository & Submission**   | **15%** | Cấu trúc Repo sạch sẽ, commit chuẩn chỉ và nộp đúng hạn trên LMS VLearn.                                                  | Link Repo GitHub cá nhân.                                                          |

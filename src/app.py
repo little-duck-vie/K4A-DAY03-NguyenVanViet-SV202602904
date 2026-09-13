@@ -61,6 +61,60 @@ def run_baseline_chatbot(user_query: str, provider):
     print(f"🤖 Chatbot phản hồi:\n{response}")
 
 
+def format_property_item(property_data: dict) -> str:
+    """Định dạng một bản ghi bất động sản thành mô tả ngắn gọn."""
+    property_id = property_data.get("property_id", "N/A")
+    title = property_data.get("title", "Bất động sản chưa có tiêu đề")
+    location = property_data.get("location", "Chưa rõ vị trí")
+    price = property_data.get("price", "Chưa rõ")
+    bedrooms = property_data.get("bedrooms", "Chưa rõ")
+    area = property_data.get("area", "Chưa rõ")
+    legal_status = property_data.get("legal_status", "Chưa rõ")
+    status = property_data.get("status", "Chưa rõ")
+
+    return (
+        f"- {property_id}: {title} | Vị trí: {location} | Giá: {price} tỷ VNĐ | "
+        f"{bedrooms} phòng ngủ | Diện tích: {area} m2 | Pháp lý: {legal_status} | "
+        f"Trạng thái: {status}"
+    )
+
+
+def synthesize_property_answer(obs_data: dict) -> str:
+    """Tổng hợp phản hồi cuối cùng từ Observation của các tool bất động sản."""
+    status = obs_data.get("status")
+
+    if status == "SUCCESS":
+        data = obs_data.get("data")
+
+        if isinstance(data, list):
+            if not data:
+                return "Không tìm thấy bất động sản phù hợp với yêu cầu."
+
+            items = "\n".join(format_property_item(item) for item in data)
+            total = obs_data.get("total", len(data))
+            return f"Tìm thấy {total} bất động sản phù hợp:\n{items}"
+
+        if isinstance(data, dict):
+            property_data = {
+                "property_id": obs_data.get("property_id", data.get("property_id", "N/A")),
+                **data
+            }
+            return f"Thông tin bất động sản:\n{format_property_item(property_data)}"
+
+        if "message" in obs_data:
+            return obs_data["message"]
+
+        return f"Đã hoàn tất xử lý qua MCP Server: {json.dumps(obs_data, ensure_ascii=False)}"
+
+    if status == "NOT_FOUND":
+        return obs_data.get(
+            "message",
+            "Không tìm thấy bất động sản phù hợp. Bạn có thể kiểm tra lại mã bất động sản hoặc đổi điều kiện tìm kiếm."
+        )
+
+    return f"Phản hồi từ công cụ: {json.dumps(obs_data, ensure_ascii=False)}"
+
+
 def run_react_agent(user_query: str, provider, mcp_server: MCPAcademicServer) -> list:
     """
     [REACT AGENT LOOP] Thực thi vòng lặp Thought -> Action -> Observation với MCP Server
@@ -118,22 +172,7 @@ def run_react_agent(user_query: str, provider, mcp_server: MCPAcademicServer) ->
                 print(f"👁️ [Observation từ MCP Server]: {obs_str}")
                 
                 # Tổng hợp Final Answer từ kết quả Observation thực tế
-                if obs_data.get("status") == "SUCCESS":
-                    if "data" in obs_data:
-                        d = obs_data["data"]
-                        final_answer = (
-                            f"Kết quả tra cứu cho sinh viên {obs_data.get('student_id', '')} ({d.get('full_name', '')}): "
-                            f"Lớp {d.get('class', '')}, GPA: {d.get('gpa', '')}, Email: {d.get('email', '')}, "
-                            f"Trạng thái: {d.get('status', '')}, Cố vấn: {d.get('advisor', '')}."
-                        )
-                    elif "message" in obs_data:
-                        final_answer = obs_data["message"]
-                    else:
-                        final_answer = f"Đã hoàn tất xử lý qua MCP Server: {json.dumps(obs_data, ensure_ascii=False)}"
-                elif obs_data.get("status") == "NOT_FOUND":
-                    final_answer = obs_data.get("message", "Không tìm thấy thông tin sinh viên yêu cầu.")
-                else:
-                    final_answer = f"Phản hồi từ công cụ: {json.dumps(obs_data, ensure_ascii=False)}"
+                final_answer = synthesize_property_answer(obs_data)
             
             trace_logs.append({
                 "step": step,
@@ -179,13 +218,14 @@ if __name__ == "__main__":
     if "--interactive" in sys.argv:
         print("🎮 [INTERACTIVE MODE] Trò chuyện trực tiếp với ReAct Agent:")
         print("💡 Gợi ý câu hỏi thử nghiệm:")
-        print("   - Câu hỏi chung: 'Quy chế học vụ VinUni yêu cầu bao nhiêu tín chỉ?'")
-        print("   - Tra cứu học vụ: 'Hãy tra cứu thông tin học vụ của sinh viên SV2026001'")
-        print("   - Đặt lịch hẹn: 'Đặt lịch hẹn tư vấn cho SV2026001 vào 14:00 ngày 15/09/2026'")
+        print("   - Câu hỏi chung: 'Khi mua căn hộ để ở thì tôi nên quan tâm những tiêu chí nào?'")
+        print("   - Tìm kiếm bất động sản: 'Hãy tìm các căn hộ 2 phòng ngủ tại Hà Nội có giá dưới 3,5 tỷ đồng.'")
+        print("   - Tra cứu chi tiết: 'Hãy tra cứu thông tin bất động sản có mã BDS001.'")
+        print("   - Đặt lịch xem nhà: 'Tôi muốn đặt lịch xem căn hộ mã BDS001 vào lúc 14:00 ngày 20/09/2026.'")
         print("   - Gõ 'exit' hoặc 'quit' để kết thúc phiên trò chuyện.\n")
         while True:
             try:
-                user_input = input("👤 Sinh viên hỏi: ").strip()
+                user_input = input("👤 Khách hàng hỏi: ").strip()
                 if not user_input or user_input.lower() in ["exit", "quit"]:
                     print("👋 Tạm biệt! Kết thúc phiên trò chuyện.")
                     break
@@ -227,7 +267,7 @@ if __name__ == "__main__":
         print("  2. Chạy toàn bộ Test Cases:    python src/app.py --all\n")
         
         sample_query = tests[1]["question"]
-        print(f"--- 🏁 DEMO CHẠY THỬ 1 TEST CASE MẪU (TC02: Tra cứu học vụ) ---")
+        print(f"--- 🏁 DEMO CHẠY THỬ 1 TEST CASE MẪU (TC02: Tìm kiếm bất động sản) ---")
         logs = run_react_agent(sample_query, provider, mcp_server)
         save_waterfall_trace(logs)
         print("\n💡 Hãy thử ngay lệnh: python src/app.py --interactive để chat trực tiếp!")

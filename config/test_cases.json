@@ -1,0 +1,37 @@
+[
+  {
+    "id": "TC01",
+    "type": "direct_query",
+    "question": "Chào bạn, khi mua căn hộ để ở thì tôi nên quan tâm những tiêu chí nào?",
+    "expected_behavior": "Chatbot trả lời trực tiếp dựa trên kiến thức và System Prompt, giải thích các tiêu chí như ngân sách, vị trí, pháp lý, diện tích, tiện ích và khả năng vay; không cần gọi Tool.",
+    "complexity": "Low"
+  },
+  {
+    "id": "TC02",
+    "type": "single_tool_query",
+    "question": "Hãy tìm các căn hộ 2 phòng ngủ tại Hà Nội có giá dưới 3,5 tỷ đồng.",
+    "expected_behavior": "Agent nhận diện nhu cầu tìm kiếm bất động sản và tự động phát sinh Tool Call 'property_search' với các tham số phù hợp như loại bất động sản, số phòng ngủ, khu vực và ngân sách tối đa.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC03",
+    "type": "appointment_booking",
+    "question": "Tôi muốn đặt lịch xem căn hộ mã BDS001 vào lúc 14:00 ngày 20/09/2026.",
+    "expected_behavior": "Agent tự động phát sinh Tool Call 'schedule_property_viewing' với đúng mã bất động sản, thời gian và thông tin cần thiết để đặt lịch xem nhà.",
+    "complexity": "Medium"
+  },
+  {
+    "id": "TC04",
+    "type": "multi_step_reasoning",
+    "question": "Tôi muốn mua căn hộ 2 phòng ngủ dưới 3,5 tỷ tại Hà Nội, thời gian đi đến Cầu Giấy dưới 30 phút. Hãy tìm căn phù hợp nhất và đặt lịch xem căn được đánh giá tốt nhất vào lúc 10:00 ngày 22/09/2026.",
+    "expected_behavior": "Agent thực hiện chuỗi suy luận ReAct đa bước: trước tiên gọi 'property_search' để tìm các căn phù hợp, sau đó đánh giá hoặc so sánh các kết quả dựa trên ngân sách và thời gian di chuyển, lựa chọn căn phù hợp nhất, rồi gọi 'schedule_property_viewing' để đặt lịch xem căn đó.",
+    "complexity": "High"
+  },
+  {
+    "id": "TC05",
+    "type": "edge_case_handling",
+    "question": "Hãy tra cứu thông tin bất động sản có mã BDS999999.",
+    "expected_behavior": "Agent gọi Tool tra cứu bất động sản, nhận kết quả NOT_FOUND và phản hồi rõ ràng rằng không tìm thấy bất động sản tương ứng; không tự bịa đặt thông tin về giá, vị trí hoặc pháp lý.",
+    "complexity": "Medium"
+  }
+]

@@ -38,25 +38,42 @@ class MockOfflineProvider(BaseLLMProvider):
         prompt_lower = prompt.lower()
         
         # Mô phỏng nhận diện intent gọi Tool
-        if "sv2026001" in prompt_lower and "đặt lịch" in prompt_lower:
+        if "đặt lịch" in prompt_lower and "bds001" in prompt_lower:
             return {
                 "type": "tool_call",
-                "tool_name": "schedule_appointment",
-                "arguments": {"student_id": "SV2026001", "datetime_str": "14:00 15/09/2026", "advisor_name": "PGS.TS Nguyễn Văn A"},
-                "thought": "Người dùng yêu cầu đặt lịch hẹn tư vấn cho sinh viên SV2026001. Tôi sẽ gọi tool schedule_appointment."
+                "tool_name": "schedule_property_viewing",
+                "arguments": {"property_id": "BDS001", "appointment_time": "2026-09-20T14:00:00+07:00"},
+                "thought": "Khách hàng muốn đặt lịch xem bất động sản BDS001. Tôi sẽ gọi tool schedule_property_viewing."
             }
-        elif "sv2026001" in prompt_lower or "tra cứu" in prompt_lower:
+        elif "bds999999" in prompt_lower:
             return {
                 "type": "tool_call",
-                "tool_name": "academic_query",
-                "arguments": {"student_id": "SV2026001"},
-                "thought": "Người dùng muốn tra cứu thông tin học vụ của sinh viên SV2026001. Tôi sẽ gọi tool academic_query."
+                "tool_name": "property_detail",
+                "arguments": {"property_id": "BDS999999"},
+                "thought": "Khách hàng muốn tra cứu mã bất động sản BDS999999. Tôi sẽ gọi tool property_detail."
+            }
+        elif "bds001" in prompt_lower or "tra cứu" in prompt_lower:
+            return {
+                "type": "tool_call",
+                "tool_name": "property_detail",
+                "arguments": {"property_id": "BDS001"},
+                "thought": "Khách hàng muốn tra cứu thông tin một bất động sản cụ thể. Tôi sẽ gọi tool property_detail."
+            }
+        elif "2 phòng ngủ" in prompt_lower or "3,5 tỷ" in prompt_lower or "3.5 tỷ" in prompt_lower:
+            return {
+                "type": "tool_call",
+                "tool_name": "property_search",
+                "arguments": {"location": "Hà Nội", "max_price": 3.5, "bedrooms": 2},
+                "thought": "Khách hàng muốn tìm căn hộ 2 phòng ngủ tại Hà Nội dưới 3,5 tỷ. Tôi sẽ gọi tool property_search."
             }
         else:
             return {
                 "type": "text",
-                "content": f"[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-                "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool."
+                "content": (
+                    "[Mock Agent Response]: Khi mua căn hộ để ở, bạn nên kiểm tra ngân sách, vị trí, "
+                    "pháp lý, diện tích, tiện ích, phí quản lý, khả năng vay và tính thanh khoản sau này."
+                ),
+                "thought": "Câu hỏi chung về tiêu chí mua bất động sản, trả lời trực tiếp không cần gọi Tool."
             }
 
 

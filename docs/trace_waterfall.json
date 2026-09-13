@@ -1,29 +1,271 @@
 [
   {
     "step": 1,
-    "query": "Chào bạn, bạn có thể giới thiệu quy chế học vụ cơ bản của Đại học VinUni không?",
+    "query": "Chào bạn, khi mua căn hộ để ở thì tôi nên quan tâm những tiêu chí nào?",
     "action_type": "FINAL_ANSWER",
-    "thought": "Câu hỏi chung về quy chế học vụ, trả lời trực tiếp không cần gọi Tool.",
-    "output": "[Mock Agent Response]: Xin chào! Quy chế học vụ VinUni yêu cầu sinh viên tích lũy tối thiểu 120 tín chỉ và duy trì GPA trên 2.0 để tốt nghiệp.",
-    "latency_ms": 2845.93
+    "thought": "Gemini phản hồi trực tiếp bằng văn bản (không cần gọi công cụ).",
+    "output": "Khi mua căn hộ để ở, việc lựa chọn kỹ lưỡng sẽ giúp bạn có một không gian sống thoải mái, an toàn và bền vững. Dưới đây là các tiêu chí quan trọng nhất mà bạn nên quan tâm:\n\n### 1. Vị trí và Kết nối Giao thông\n* **Khoảng cách đến nơi làm việc và trường học:** Nên chọn căn hộ thuận tiện cho việc di chuyển hàng ngày của các thành viên trong gia đình.\n* **Hạ tầng xung quanh:** Khu vực có hay bị ngập nước, kẹt xe vào giờ cao điểm hay không? Có gần các trục đường lớn hoặc phương tiện công cộng (xe buýt, tàu điện) không?\n\n### 2. Uy tín của Chủ đầu tư\n* **Năng lực tài chính và kinh nghiệm:** Tìm hiểu các dự án trước đó của chủ đầu tư xem họ có bàn giao đúng hạn, chất lượng xây dựng ra sao và có xảy ra tranh chấp gì không.\n* **Đơn vị quản lý vận hành:** Một đơn vị quản lý chuyên nghiệp (như Savills, CBRE, Vinhomes,...) sẽ đảm bảo chất lượng sống, an ninh và bảo trì tòa nhà tốt hơn.\n\n### 3. Pháp lý của Dự án\n* **Sổ hồng/Sổ đỏ:** Dự án đã có sổ hay chưa? Nếu là dự án đang xây dựng, cần kiểm tra giấy phép xây dựng, bảo lãnh ngân hàng và hợp đồng mua bán có rõ ràng không.\n* **Thời hạn sở hữu:** Sở hữu lâu dài hay có thời hạn (50 năm).\n\n### 4. Tiện ích Nội khu và Ngoại khu\n* **Tiện ích nội khu:** Khuôn viên cây xanh, hồ bơi, phòng gym, khu vui chơi trẻ em, siêu thị tiện lợi, hầm đỗ xe (đặc biệt là chỗ đỗ xe ô tô có đủ không).\n* **Tiện ích ngoại khu:** Trong bán kính 1-3km có gần bệnh viện, trường học, chợ, trung tâm thương mại hay công viên không.\n\n### 5. Thiết kế và Chất lượng Căn hộ\n* **Diện tích và bố trí không gian:** Số lượng phòng ngủ, phòng vệ sinh có phù hợp với nhu cầu gia đình? Căn hộ có đón được ánh sáng tự nhiên và gió trời không (ưu tiên căn góc, hướng ban công mát như Đông, Nam, Đông Nam).\n* **Hệ thống an toàn:** Hệ thống phòng cháy chữa cháy (PCCC), camera an ninh, thẻ từ thang máy và lối thoát hiểm.\n\n### 6. Chi phí Vận hành hàng tháng\n* Ngoài tiền mua nhà, bạn cần lưu ý các chi phí định kỳ như: phí quản lý (tính theo m²), phí gửi xe máy/ô tô, chi phí điện, nước, internet và phí bảo trì.\n\n### 7. Tài chính và Hỗ trợ vay vốn\n* **Ngân sách thực tế:** Xác định rõ số tiền tự có và số tiền cần vay. Tỷ lệ vay an toàn thường dưới 50% giá trị căn hộ để tránh áp lực trả nợ hàng tháng.\n* **Chính sách ưu đãi:** Lãi suất vay mua nhà của các ngân hàng liên kết với dự án.\n\nNếu bạn đã nhắm được khu vực nào cụ thể (ví dụ: Cầu Giấy, Thanh Xuân, Nam Từ Liêm...) hoặc có mức ngân sách dự kiến, hãy chia sẻ với tôi để tôi có thể hỗ trợ tìm kiếm các căn hộ phù hợp nhất cho bạn nhé!",
+    "latency_ms": 6347.29
   },
   {
     "step": 1,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Hãy tìm các căn hộ 2 phòng ngủ tại Hà Nội có giá dưới 3,5 tỷ đồng.",
     "action_type": "TOOL_EXECUTION",
-    "tool_name": "academic_query",
+    "tool_name": "property_search",
     "arguments": {
-      "student_id": "SV2026001"
+      "location": "Hà Nội",
+      "bedrooms": 2,
+      "max_price": 3.5
     },
-    "observation": {},
-    "latency_ms": 799.12
+    "observation": {
+      "status": "SUCCESS",
+      "total": 8,
+      "data": [
+        {
+          "property_id": "BDS001",
+          "title": "Căn hộ 2PN tại Cầu Giấy",
+          "location": "Cầu Giấy, Hà Nội",
+          "price": 3.2,
+          "bedrooms": 2,
+          "area": 70,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS002",
+          "title": "Căn hộ 2PN tại Nam Từ Liêm",
+          "location": "Nam Từ Liêm, Hà Nội",
+          "price": 2.9,
+          "bedrooms": 2,
+          "area": 68,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS005",
+          "title": "Căn hộ 2PN tại Mỹ Đình",
+          "location": "Nam Từ Liêm, Hà Nội",
+          "price": 3.4,
+          "bedrooms": 2,
+          "area": 75,
+          "legal_status": "Hợp đồng mua bán",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS008",
+          "title": "Căn hộ 2PN tại Linh Đàm",
+          "location": "Hoàng Mai, Hà Nội",
+          "price": 2.4,
+          "bedrooms": 2,
+          "area": 65,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS010",
+          "title": "Căn hộ 2PN tại Long Biên",
+          "location": "Long Biên, Hà Nội",
+          "price": 2.8,
+          "bedrooms": 2,
+          "area": 69,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS013",
+          "title": "Căn hộ 2PN tại Văn Quán",
+          "location": "Hà Đông, Hà Nội",
+          "price": 2.6,
+          "bedrooms": 2,
+          "area": 67,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS022",
+          "title": "Nhà tập thể cải tạo tại Kim Liên",
+          "location": "Đống Đa, Hà Nội",
+          "price": 2.2,
+          "bedrooms": 2,
+          "area": 55,
+          "legal_status": "Sổ đỏ",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS025",
+          "title": "Căn hộ 2PN tại Xuân Đỉnh",
+          "location": "Bắc Từ Liêm, Hà Nội",
+          "price": 3.1,
+          "bedrooms": 2,
+          "area": 70,
+          "legal_status": "Sổ hồng",
+          "status": "Đã cọc"
+        }
+      ]
+    },
+    "latency_ms": 5779.15
   },
   {
     "step": 2,
-    "query": "Hãy tra cứu thông tin học vụ của sinh viên SV2026001.",
+    "query": "Hãy tìm các căn hộ 2 phòng ngủ tại Hà Nội có giá dưới 3,5 tỷ đồng.",
     "action_type": "FINAL_ANSWER",
     "thought": "Tổng hợp kết quả từ MCP Server thành công.",
-    "output": "Chưa thể trả lời chi tiết do chưa nhận được dữ liệu từ MCP Server (hãy hoàn thành TODO 2.1).",
+    "output": "Tìm thấy 8 bất động sản phù hợp:\n- BDS001: Căn hộ 2PN tại Cầu Giấy | Vị trí: Cầu Giấy, Hà Nội | Giá: 3.2 tỷ VNĐ | 2 phòng ngủ | Diện tích: 70 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS002: Căn hộ 2PN tại Nam Từ Liêm | Vị trí: Nam Từ Liêm, Hà Nội | Giá: 2.9 tỷ VNĐ | 2 phòng ngủ | Diện tích: 68 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS005: Căn hộ 2PN tại Mỹ Đình | Vị trí: Nam Từ Liêm, Hà Nội | Giá: 3.4 tỷ VNĐ | 2 phòng ngủ | Diện tích: 75 m2 | Pháp lý: Hợp đồng mua bán | Trạng thái: Đang bán\n- BDS008: Căn hộ 2PN tại Linh Đàm | Vị trí: Hoàng Mai, Hà Nội | Giá: 2.4 tỷ VNĐ | 2 phòng ngủ | Diện tích: 65 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS010: Căn hộ 2PN tại Long Biên | Vị trí: Long Biên, Hà Nội | Giá: 2.8 tỷ VNĐ | 2 phòng ngủ | Diện tích: 69 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS013: Căn hộ 2PN tại Văn Quán | Vị trí: Hà Đông, Hà Nội | Giá: 2.6 tỷ VNĐ | 2 phòng ngủ | Diện tích: 67 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS022: Nhà tập thể cải tạo tại Kim Liên | Vị trí: Đống Đa, Hà Nội | Giá: 2.2 tỷ VNĐ | 2 phòng ngủ | Diện tích: 55 m2 | Pháp lý: Sổ đỏ | Trạng thái: Đang bán\n- BDS025: Căn hộ 2PN tại Xuân Đỉnh | Vị trí: Bắc Từ Liêm, Hà Nội | Giá: 3.1 tỷ VNĐ | 2 phòng ngủ | Diện tích: 70 m2 | Pháp lý: Sổ hồng | Trạng thái: Đã cọc",
+    "latency_ms": 10.0
+  },
+  {
+    "step": 1,
+    "query": "Tôi muốn đặt lịch xem căn hộ mã BDS001 vào lúc 14:00 ngày 20/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "schedule_property_viewing",
+    "arguments": {
+      "appointment_time": "2026-09-20T14:00:00+07:00",
+      "property_id": "BDS001"
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "booking_id": "VIEW-BDS001-99",
+      "property_id": "BDS001",
+      "property": "Căn hộ 2PN tại Cầu Giấy",
+      "appointment_time": "2026-09-20T14:00:00+07:00",
+      "message": "Đặt lịch xem BDS001 thành công vào lúc 2026-09-20T14:00:00+07:00."
+    },
+    "latency_ms": 2337.72
+  },
+  {
+    "step": 2,
+    "query": "Tôi muốn đặt lịch xem căn hộ mã BDS001 vào lúc 14:00 ngày 20/09/2026.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
+    "output": "Đặt lịch xem BDS001 thành công vào lúc 2026-09-20T14:00:00+07:00.",
+    "latency_ms": 10.0
+  },
+  {
+    "step": 1,
+    "query": "Tôi muốn mua căn hộ 2 phòng ngủ dưới 3,5 tỷ tại Hà Nội, thời gian đi đến Cầu Giấy dưới 30 phút. Hãy tìm căn phù hợp nhất và đặt lịch xem căn được đánh giá tốt nhất vào lúc 10:00 ngày 22/09/2026.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "property_search",
+    "arguments": {
+      "location": "Hà Nội",
+      "max_price": 3.5,
+      "bedrooms": 2
+    },
+    "observation": {
+      "status": "SUCCESS",
+      "total": 8,
+      "data": [
+        {
+          "property_id": "BDS001",
+          "title": "Căn hộ 2PN tại Cầu Giấy",
+          "location": "Cầu Giấy, Hà Nội",
+          "price": 3.2,
+          "bedrooms": 2,
+          "area": 70,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS002",
+          "title": "Căn hộ 2PN tại Nam Từ Liêm",
+          "location": "Nam Từ Liêm, Hà Nội",
+          "price": 2.9,
+          "bedrooms": 2,
+          "area": 68,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS005",
+          "title": "Căn hộ 2PN tại Mỹ Đình",
+          "location": "Nam Từ Liêm, Hà Nội",
+          "price": 3.4,
+          "bedrooms": 2,
+          "area": 75,
+          "legal_status": "Hợp đồng mua bán",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS008",
+          "title": "Căn hộ 2PN tại Linh Đàm",
+          "location": "Hoàng Mai, Hà Nội",
+          "price": 2.4,
+          "bedrooms": 2,
+          "area": 65,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS010",
+          "title": "Căn hộ 2PN tại Long Biên",
+          "location": "Long Biên, Hà Nội",
+          "price": 2.8,
+          "bedrooms": 2,
+          "area": 69,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS013",
+          "title": "Căn hộ 2PN tại Văn Quán",
+          "location": "Hà Đông, Hà Nội",
+          "price": 2.6,
+          "bedrooms": 2,
+          "area": 67,
+          "legal_status": "Sổ hồng",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS022",
+          "title": "Nhà tập thể cải tạo tại Kim Liên",
+          "location": "Đống Đa, Hà Nội",
+          "price": 2.2,
+          "bedrooms": 2,
+          "area": 55,
+          "legal_status": "Sổ đỏ",
+          "status": "Đang bán"
+        },
+        {
+          "property_id": "BDS025",
+          "title": "Căn hộ 2PN tại Xuân Đỉnh",
+          "location": "Bắc Từ Liêm, Hà Nội",
+          "price": 3.1,
+          "bedrooms": 2,
+          "area": 70,
+          "legal_status": "Sổ hồng",
+          "status": "Đã cọc"
+        }
+      ]
+    },
+    "latency_ms": 2163.34
+  },
+  {
+    "step": 2,
+    "query": "Tôi muốn mua căn hộ 2 phòng ngủ dưới 3,5 tỷ tại Hà Nội, thời gian đi đến Cầu Giấy dưới 30 phút. Hãy tìm căn phù hợp nhất và đặt lịch xem căn được đánh giá tốt nhất vào lúc 10:00 ngày 22/09/2026.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
+    "output": "Tìm thấy 8 bất động sản phù hợp:\n- BDS001: Căn hộ 2PN tại Cầu Giấy | Vị trí: Cầu Giấy, Hà Nội | Giá: 3.2 tỷ VNĐ | 2 phòng ngủ | Diện tích: 70 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS002: Căn hộ 2PN tại Nam Từ Liêm | Vị trí: Nam Từ Liêm, Hà Nội | Giá: 2.9 tỷ VNĐ | 2 phòng ngủ | Diện tích: 68 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS005: Căn hộ 2PN tại Mỹ Đình | Vị trí: Nam Từ Liêm, Hà Nội | Giá: 3.4 tỷ VNĐ | 2 phòng ngủ | Diện tích: 75 m2 | Pháp lý: Hợp đồng mua bán | Trạng thái: Đang bán\n- BDS008: Căn hộ 2PN tại Linh Đàm | Vị trí: Hoàng Mai, Hà Nội | Giá: 2.4 tỷ VNĐ | 2 phòng ngủ | Diện tích: 65 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS010: Căn hộ 2PN tại Long Biên | Vị trí: Long Biên, Hà Nội | Giá: 2.8 tỷ VNĐ | 2 phòng ngủ | Diện tích: 69 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS013: Căn hộ 2PN tại Văn Quán | Vị trí: Hà Đông, Hà Nội | Giá: 2.6 tỷ VNĐ | 2 phòng ngủ | Diện tích: 67 m2 | Pháp lý: Sổ hồng | Trạng thái: Đang bán\n- BDS022: Nhà tập thể cải tạo tại Kim Liên | Vị trí: Đống Đa, Hà Nội | Giá: 2.2 tỷ VNĐ | 2 phòng ngủ | Diện tích: 55 m2 | Pháp lý: Sổ đỏ | Trạng thái: Đang bán\n- BDS025: Căn hộ 2PN tại Xuân Đỉnh | Vị trí: Bắc Từ Liêm, Hà Nội | Giá: 3.1 tỷ VNĐ | 2 phòng ngủ | Diện tích: 70 m2 | Pháp lý: Sổ hồng | Trạng thái: Đã cọc",
+    "latency_ms": 10.0
+  },
+  {
+    "step": 1,
+    "query": "Hãy tra cứu thông tin bất động sản có mã BDS999999.",
+    "action_type": "TOOL_EXECUTION",
+    "tool_name": "property_detail",
+    "arguments": {
+      "property_id": "BDS999999"
+    },
+    "observation": {
+      "status": "NOT_FOUND",
+      "message": "Không tìm thấy bất động sản có mã 'BDS999999'."
+    },
+    "latency_ms": 2353.76
+  },
+  {
+    "step": 2,
+    "query": "Hãy tra cứu thông tin bất động sản có mã BDS999999.",
+    "action_type": "FINAL_ANSWER",
+    "thought": "Tổng hợp kết quả từ MCP Server thành công.",
+    "output": "Không tìm thấy bất động sản có mã 'BDS999999'.",
     "latency_ms": 10.0
   }
 ]
